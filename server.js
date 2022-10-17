@@ -1,17 +1,21 @@
 const express = require("express");
-const cors = require("cors");
-const { PORT } = require(".env");
-const app = express();
 
-require("dontenv").config();
+const app = express();
+const warehouseRoutes = require("./routes/warehouseRoutes");
+const inventoryRoutes = require("./routes/inventoryRoutes");
+
+require("dotenv").config();
+const PORT = 7000;
 
 //MIDDLEWARE
+const cors = require("cors");
 app.use(cors());
+
 app.use(express.json());
 
 app.use("/warehouses", warehouseRoutes);
-app.use("/invetory", invemtoryRoutes);
+app.use("/inventory", inventoryRoutes);
 
-app.listen(PORT, () => {
+app.listen(() => {
   console.log(`Example app listening on port ${PORT}`);
 });
