@@ -13,7 +13,6 @@ router.get("/", (req, res) => {
 router.delete("/:warehouseId", (req, res) => {
   //read json
   const warehouses = helpers.readWarehouses();
-  // console.log(warehouseItems);
 
   //get id of each warehouse
   const warehouseId = req.params.warehouseId;
@@ -23,36 +22,12 @@ router.delete("/:warehouseId", (req, res) => {
     (warehouse) => warehouse.id !== warehouseId
   );
 
-  // Now we've updated `videos` to have the filtered comments - save it to the file
+  // Now save it to the file
   fs.writeFileSync(
     "./data_test/warehouses.json",
     JSON.stringify(NewWarehouses)
   );
   res.status(204).end();
-});
-
-// warehouse edit
-router.put("/:warehouseId", (req, res) => {
-  const warehouses = helpers.readWarehouses();
-  const warehouseId = req.params.warehouseId;
-
-  const warehouseIndex = warehouses.findIndex(
-    (warehouse) => warehouse.id === warehouseId
-  );
-
-  const newWarehouse = {
-    ref: uuidv4(),
-    name: req.body.name,
-    address: req.body.address,
-    city: req.body.city,
-    country: req.body.country,
-    country: {},
-  };
-
-  warehouses[warehouseIndex].push(newWarehouse);
-
-  fs.writeFileSync("./data_test/warehouses.json", JSON.stringify(warehouses));
-  res.status(200).json(newWarehouse);
 });
 
 module.exports = router;
