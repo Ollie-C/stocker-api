@@ -1,7 +1,12 @@
 const router = require("express").Router();
 const fs = require("fs");
 const { v4: uuid } = require("uuid");
-const { readWarehouses } = require("../utils/helpers");
+const {
+  readWarehouses,
+  readInventories,
+  writeWarehouse,
+  writeInventories,
+} = require("../utils/helpers");
 
 //get ALL warehouses
 router.get("/", (req, res) => {
@@ -27,7 +32,7 @@ router.get("/:warehouseId", (req, res) => {
 
 //warehouse edit-1
 router.put("/:warehouseId", (req, res) => {
-  const warehouses = helpers.readWarehouses();
+  const warehouses = readWarehouses();
   const warehouseId = req.params.warehouseId;
   const {
     name,
@@ -37,33 +42,31 @@ router.put("/:warehouseId", (req, res) => {
     contact: { contactName, position, phone, email },
   } = req.body;
 
-  const warehouseIndex = warehouses.findIndex(
+  const warehouse = warehouses.find(
     (warehouse) => warehouse.id === warehouseId
   );
 
-  if (warehouseIndex) {
-    warehouses[warehouseIndex].name = name;
-    warehouses[warehouseIndex].address = address;
-    warehouses[warehouseIndex].city = city;
-    warehouses[warehouseIndex].country = country;
-    warehouses[warehouseIndex].contact.name = contactName;
-    warehouses[warehouseIndex].contact.position = position;
-    warehouses[warehouseIndex].contact.phone = phone;
-    warehouses[warehouseIndex].contact.email = email;
+  if (warehouse) {
+    warehouse.name = name;
+    warehouse.address = address;
+    warehouse.city = city;
+    warehouse.country = country;
+    warehouse.contact.name = contactName;
+    warehouse.contact.position = position;
+    warehouse.contact.phone = phone;
+    warehouse.contact.email = email;
 
     // console.log(warehouses);
-    fs.writeFileSync("./data_test/warehouses.json", JSON.stringify(warehouses));
+    writeWarehouse(warehouses);
     res.status(200).json(warehouses);
   } else
-    res.status(400).json({
-      errorMessage: `Warehouse with ID:${req.params.warehouseId} not found`,
-    });
+    res.status(404).json(`Could not find warehouse with id ${warehouseId}`);
 });
 
 //delete warehouse
 router.delete("/:warehouseId", (req, res) => {
   //read json
-  const warehouses = helpers.readWarehouses();
+  const warehouses = readWarehouses();
 
   //get id of each warehouse
   const warehouseId = req.params.warehouseId;
@@ -74,10 +77,7 @@ router.delete("/:warehouseId", (req, res) => {
   );
 
   // Now save it to the file
-  fs.writeFileSync(
-    "./data_test/warehouses.json",
-    JSON.stringify(NewWarehouses)
-  );
+  writeWarehouse(NewWarehouses);
   res.status(204).end();
 });
 
