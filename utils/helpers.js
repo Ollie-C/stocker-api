@@ -7,4 +7,23 @@ const readInventories = () => {
   return JSON.parse(fs.readFileSync("./data_test/inventories.json"));
 };
 
-module.exports = { readWarehouses, readInventories };
+const writeWarehouse = (warehouseData) => {
+  fs.writeFileSync(
+    "./data_test/warehouses.json",
+    JSON.stringify(warehouseData)
+  );
+};
+
+const writeInventories = (inventoriesData) => {
+  fs.writeFileSync(
+    "./data_test/inventories.json",
+    JSON.stringify(inventoriesData)
+  );
+};
+
+module.exports = {
+  readWarehouses,
+  readInventories,
+  writeWarehouse,
+  writeInventories,
+};
