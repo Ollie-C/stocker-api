@@ -25,14 +25,6 @@ router.get("/:warehouseId", (req, res) => {
     : res.status(200).json(currentWarehouse);
 });
 
-module.exports = router;
-
-//get
-router.get("/", (req, res) => {
-  const warehouses = JSON.parse(fs.readFileSync("./data_test/warehouses.json"));
-  res.status(200).json(warehouses);
-});
-
 //warehouse edit-1
 router.put("/:warehouseId", (req, res) => {
   const warehouses = helpers.readWarehouses();
@@ -66,12 +58,6 @@ router.put("/:warehouseId", (req, res) => {
     res.status(400).json({
       errorMessage: `Warehouse with ID:${req.params.warehouseId} not found`,
     });
-});
-
-//get
-router.get("/", (req, res) => {
-  const warehouses = JSON.parse(fs.readFileSync("./data_test/warehouses.json"));
-  res.status(200).json(warehouses);
 });
 
 //delete warehouse
