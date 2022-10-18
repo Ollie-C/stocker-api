@@ -8,7 +8,9 @@ require("dotenv").config();
 const { PORT } = process.env;
 
 //MIDDLEWARE
+const cors = require("cors");
 app.use(cors());
+
 app.use(express.json());
 
 app.use("/warehouses", warehouseRoutes);

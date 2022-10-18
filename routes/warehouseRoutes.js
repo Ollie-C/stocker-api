@@ -81,4 +81,35 @@ router.delete("/:warehouseId", (req, res) => {
   res.status(204).end();
 });
 
+router.post("/", (req, res) => {
+  const warehouses = readWarehouses();
+
+  const {
+    name,
+    address,
+    city,
+    country,
+    contact: { contactName, position, phone, email },
+  } = req.body;
+  console.log(req.body);
+  const newWarehouse = {
+    id: uuid(),
+    name: name,
+    address: address,
+    city: city,
+    country: country,
+    contact: {
+      name: contactName,
+      position: position,
+      phone: phone,
+      email: email,
+    },
+  };
+  warehouses.push(newWarehouse);
+  fs.writeFileSync("./data/warehouses.json", JSON.stringify(warehouses));
+
+  res.json(newWarehouse);
+  console.log(newWarehouse);
+});
+
 module.exports = router;
