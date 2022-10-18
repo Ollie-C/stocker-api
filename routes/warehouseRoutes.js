@@ -91,7 +91,10 @@ router.delete("/:warehouseId", (req, res) => {
 
 router.post("/", (req, res) => {
   const warehouses = readWarehouses();
-
+  if (Object.keys(req.body).length === 0) {
+    res.status(404).json({ errorMessage: "request needs a body" });
+    return;
+  }
   const {
     name,
     address,
@@ -116,7 +119,7 @@ router.post("/", (req, res) => {
   warehouses.push(newWarehouse);
   fs.writeFileSync("./data/warehouses.json", JSON.stringify(warehouses));
 
-  res.json(newWarehouse);
+  res.status(200).json(newWarehouse);
   console.log(newWarehouse);
 });
 
