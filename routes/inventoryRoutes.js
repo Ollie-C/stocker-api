@@ -24,7 +24,7 @@ router.get("/:itemId", (req, res) => {
 });
 
 // const findWarehouseID = (name) => {
-//   const warehouses =
+//   const warehouses = readWarehouses();
 //   const warehouse = warehouses.find((element) => {
 //     warehouse.name = name;
 //   });
@@ -33,7 +33,11 @@ router.get("/:itemId", (req, res) => {
 // };
 
 router.post("/", (req, res) => {
-  const inventories = helpers.readInventories();
+  if (Object.keys(req.body).length === 0) {
+    res.status(404).json({ errorMessage: "request needs a body" });
+    return;
+  }
+  const inventories = readInventories();
   const {
     itemName,
     description,
@@ -55,6 +59,7 @@ router.post("/", (req, res) => {
   };
   inventories.push(newInventory);
   fs.writeFileSync("./data/inventories.json", JSON.stringify(inventories));
+  res.status(200).json(newInventory);
 });
 
 module.exports = router;
