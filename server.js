@@ -4,7 +4,6 @@ const app = express();
 const warehouseRoutes = require("./routes/warehouseRoutes");
 const inventoryRoutes = require("./routes/inventoryRoutes");
 
-//.ENV
 require("dotenv").config();
 const { PORT } = process.env;
 
