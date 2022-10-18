@@ -1,11 +1,11 @@
 const express = require("express");
-
+const cors = require("cors");
 const app = express();
 const warehouseRoutes = require("./routes/warehouseRoutes");
 const inventoryRoutes = require("./routes/inventoryRoutes");
 
 require("dotenv").config();
-const PORT = 7000;
+const { PORT } = process.env;
 
 //MIDDLEWARE
 const cors = require("cors");
