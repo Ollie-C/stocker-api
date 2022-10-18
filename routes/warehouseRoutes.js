@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const fs = require("fs");
 const { v4: uuid } = require("uuid");
-const { readWarehouses } = require("../utils/helpers");
+const { readWarehouses, readInventories } = require("../utils/helpers");
 
 //get ALL warehouses
 router.get("/", (req, res) => {
@@ -11,11 +11,8 @@ router.get("/", (req, res) => {
 
 //get INDIVIDUAL warehouse
 router.get("/:warehouseId", (req, res) => {
-  //read data
   const warehouses = readWarehouses();
-  //store id parameter
   const warehouseId = req.params.warehouseId;
-  //find warehouse with id that matches parameter
   const currentWarehouse = warehouses.find(
     (warehouse) => warehouse.id === warehouseId
   );
@@ -23,6 +20,17 @@ router.get("/:warehouseId", (req, res) => {
   !currentWarehouse
     ? res.status(404).send(`Could not find warehouse with id ${warehouseId}`)
     : res.status(200).json(currentWarehouse);
+});
+
+//get individual warehouse INVENTORY
+router.get("/:warehouseId/inventory", (req, res) => {
+  const inventories = readInventories();
+  const warehouseId = req.params.warehouseId;
+  const currentInventory = inventories.filter(
+    (inventory) => warehouseId === inventory.warehouseID
+  );
+  console.log(`Inventory for warehouse ${warehouseId}`);
+  res.status(200).json(currentInventory);
 });
 
 //warehouse edit-1
