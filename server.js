@@ -1,5 +1,4 @@
 const express = require("express");
-const cors = require("cors");
 const app = express();
 const warehouseRoutes = require("./routes/warehouseRoutes");
 const inventoryRoutes = require("./routes/inventoryRoutes");
