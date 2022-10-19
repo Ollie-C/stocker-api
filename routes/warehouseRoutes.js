@@ -38,7 +38,7 @@ router.get("/:warehouseId/inventory", (req, res) => {
   res.status(200).json(currentInventory);
 });
 
-//warehouse edit-1
+//warehouse edit/PUT
 router.put("/:warehouseId", (req, res) => {
   const warehouses = readWarehouses();
   const warehouseId = req.params.warehouseId;
@@ -117,7 +117,8 @@ router.post("/", (req, res) => {
     },
   };
   warehouses.push(newWarehouse);
-  fs.writeFileSync("./data/warehouses.json", JSON.stringify(warehouses));
+  writeWarehouse(warehouses);
+  res.status(200).json(warehouses);
 
   res.status(200).json(newWarehouse);
   console.log(newWarehouse);

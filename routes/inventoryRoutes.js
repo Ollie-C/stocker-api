@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const fs = require("fs");
 const { v4: uuid } = require("uuid");
-const { readInventories } = require("../utils/helpers");
+const { readInventories, writeInventories } = require("../utils/helpers");
 
 //get ALL inventories
 router.get("/", (req, res) => {
@@ -21,6 +21,42 @@ router.get("/:itemId", (req, res) => {
   !currentItem
     ? res.status(404).send(`Could not find item with id ${itemId}`)
     : res.status(200).json(currentItem);
+});
+
+//delete inventory
+router.delete("/:itemId", (req, res) => {
+  //read json
+  const inventories = readInventories();
+  const itemId = req.params.itemId;
+
+  //get id of each warehouse
+  const newInventory = inventories.filter((item) => item.id !== itemId);
+
+  // Now save it to the file
+  writeInventories(newInventory);
+  res.status(204).end();
+});
+
+//inventory edit-1
+router.put("/:itemId", (req, res) => {
+  const inventories = readInventories();
+  const itemId = req.params.itemId;
+  const { itemName, description, category, status, quantity, warehouseName } =
+    req.body;
+
+  const currentItem = inventories.find((item) => item.id === itemId);
+
+  if (currentItem) {
+    currentItem.itemName = itemName;
+    currentItem.description = description;
+    currentItem.category = category;
+    currentItem.status = status;
+    currentItem.quantity = quantity;
+    currentItem.warehouseName = warehouseName;
+
+    writeInventories(inventories);
+    res.status(200).json(inventories);
+  } else res.status(400).json(`Could not find inventory with id ${itemId}`);
 });
 
 // const findWarehouseID = (name) => {
@@ -58,8 +94,10 @@ router.post("/", (req, res) => {
     quantity: quantity,
   };
   inventories.push(newInventory);
-  fs.writeFileSync("./data/inventories.json", JSON.stringify(inventories));
-  res.status(200).json(newInventory);
+
+  writeInventories(inventories);
+  res.status(200).json(inventories);
+
 });
 
 module.exports = router;
