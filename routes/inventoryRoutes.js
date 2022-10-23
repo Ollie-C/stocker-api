@@ -41,8 +41,8 @@ router.delete("/:itemId", (req, res) => {
 router.put("/:itemId", (req, res) => {
   const inventories = readInventories();
   const itemId = req.params.itemId;
-  const { itemName, description, category, status, quantity, warehouseName } =
-    req.body;
+  console.log(itemId);
+  const { itemName, description, category, status, warehouseName } = req.body;
 
   const currentItem = inventories.find((item) => item.id === itemId);
 
@@ -51,7 +51,6 @@ router.put("/:itemId", (req, res) => {
     currentItem.description = description;
     currentItem.category = category;
     currentItem.status = status;
-    currentItem.quantity = quantity;
     currentItem.warehouseName = warehouseName;
 
     writeInventories(inventories);
@@ -97,7 +96,6 @@ router.post("/", (req, res) => {
 
   writeInventories(inventories);
   res.status(200).json(inventories);
-
 });
 
 module.exports = router;
