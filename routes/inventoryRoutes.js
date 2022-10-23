@@ -68,11 +68,12 @@ router.post("/", (req, res) => {
   const inventories = readInventories();
   const { itemName, description, category, quantity, warehouseName } = req.body;
 
-  //Find the warehouse ID by matching the name in the request body with a name in the warehouse data
+  // Find the warehouse ID by matching the name in the request body with a name in the warehouse data
   const warehouses = readWarehouses();
   const warehouse = warehouses.find(
-    (warehouse) => warehouse.name === warehouseName
+    (warehouse) => warehouse.name == warehouseName
   );
+
   //Instead of passing status from the request body, have it set automatically to one of two options dependant on quantity
   const status = quantity > 0 ? "In Stock" : "Out of Stock";
 
