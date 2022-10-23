@@ -78,11 +78,11 @@ router.post("/", (req, res) => {
     itemName,
     description,
     category,
-    status,
     quantity,
     warehouseName,
     warehouseID,
   } = req.body;
+  const status = quantity > 0 ? "In Stock" : "Out of Stock";
   const newInventory = {
     id: uuid(),
     warehouseID: warehouseID,
@@ -91,13 +91,12 @@ router.post("/", (req, res) => {
     description: description,
     category: category,
     status: status,
-    quantity: quantity,
+    quantity: parseInt(quantity),
   };
   inventories.push(newInventory);
 
   writeInventories(inventories);
   res.status(200).json(inventories);
-
 });
 
 module.exports = router;
