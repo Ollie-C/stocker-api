@@ -110,7 +110,8 @@ router.post("/", (req, res) => {
       email: email,
     },
   };
-  warehouses.push(newWarehouse);
+  // warehouses.push(newWarehouse);
+  warehouses.unshift(newWarehouse);
   writeWarehouse(warehouses);
   res.status(200).json(warehouses);
 

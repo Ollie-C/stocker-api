@@ -1,1 +1,41 @@
-[{"id":"89898957-04ba-4bd0-9f5c-a7aea7447963","name":"Santa Monica","address":"520 Broadway edit","city":"Santa Monica","country":"USA","contact":{"name":"Sharon Ng","position":"Warehouse Manager","phone":"+1 (646) 123-1234","email":"sng@instock.com"}},{"id":"ade0a47b-cee6-4693-b4cd-a7e6cb25f4b7","name":"Seattle","address":"1301 Third Avenue","city":"Seattle","country":"USA","contact":{"name":"Daniel Bachu","position":"Warehouse Manager","phone":"+1 (646) 123-1234","email":"dbachu@instock.com"}},{"id":"bb1491eb-30e6-4728-a5fa-72f89feaf622","name":"Miami","address":"2650 NW 5th Avenue","city":"Miami","country":"USA","contact":{"name":"Alana Thomas","position":"Warehouse Manager","phone":"+1 (646) 123-1234","email":"athomas@instock.com"}},{"id":"150a36cf-f38e-4f59-8e31-39974207372d","name":"Boston","address":"215 Essex Street","city":"Boston","country":"USA","contact":{"name":"Vanessa Mendoza","position":"Warehouse Manager","phone":"+1 (646) 123-1234","email":"vmendoza@instock.com"}},{"id":"b9af0f4c-67ef-430d-8883-d7b3335d95e3","name":"fkweok","address":"ookwepo","city":"kopkofk","country":"ok","contact":{"name":"pof","position":"pok","phone":"07534583458","email":"bob@bob.com"}},{"id":"b3928b49-db89-4e1a-a603-2373e92a62ad","name":"dsa","address":"fw","city":"ef","country":"ew","contact":{"name":"ew","position":"we","phone":"07723695772","email":"bob@bob.com"}}]
+[
+  {
+    "id": "ade0a47b-cee6-4693-b4cd-a7e6cb25f4b7",
+    "name": "Seattle",
+    "address": "1301 Third Avenue",
+    "city": "Seattle",
+    "country": "UK",
+    "contact": {
+      "name": "Daniel Bachu",
+      "position": "Warehouse Manager",
+      "phone": "+1 (646) 123-1234",
+      "email": "dbachu@instock.com"
+    }
+  },
+  {
+    "id": "bb1491eb-30e6-4728-a5fa-72f89feaf622",
+    "name": "Miami",
+    "address": "2650 NW 5th Avenue",
+    "city": "Miami",
+    "country": "USA",
+    "contact": {
+      "name": "Alana Thomas",
+      "position": "Warehouse Manager",
+      "phone": "+1 (646) 123-1234",
+      "email": "athomas@instock.com"
+    }
+  },
+  {
+    "id": "150a36cf-f38e-4f59-8e31-39974207372d",
+    "name": "Boston",
+    "address": "215 Essex Street",
+    "city": "Boston",
+    "country": "USA",
+    "contact": {
+      "name": "Vanessa Mendoza",
+      "position": "Warehouse Manager",
+      "phone": "+1 (646) 123-1234",
+      "email": "vmendoza@instock.com"
+    }
+  }
+]
