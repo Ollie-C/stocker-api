@@ -48,8 +48,10 @@ router.put("/:itemId", (req, res) => {
   const currentItem = inventories.find((item) => item.id === itemId);
 
   if (currentItem) {
-    currentItem.itemName = itemName;
-    currentItem.description = description;
+    currentItem.itemName = itemName ? itemName : currentItem.itemName;
+    currentItem.description = description
+      ? description
+      : currentItem.description;
     currentItem.category = category;
     currentItem.status = status;
     currentItem.warehouseName = warehouseName;
