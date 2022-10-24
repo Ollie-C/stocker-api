@@ -21,7 +21,6 @@ router.get("/:warehouseId", (req, res) => {
   const currentWarehouse = warehouses.find(
     (warehouse) => warehouse.id === warehouseId
   );
-  //temporary validation
   !currentWarehouse
     ? res.status(404).send(`Could not find warehouse with id ${warehouseId}`)
     : res.status(200).json(currentWarehouse);
@@ -41,6 +40,10 @@ router.get("/:warehouseId/inventory", (req, res) => {
 //warehouse edit/PUT
 router.put("/:warehouseId", (req, res) => {
   const warehouses = readWarehouses();
+  if (Object.keys(req.body).length === 0) {
+    res.status(404).json({ errorMessage: "request needs a body" });
+    return;
+  }
   const warehouseId = req.params.warehouseId;
   const {
     name,
@@ -64,7 +67,6 @@ router.put("/:warehouseId", (req, res) => {
     warehouse.contact.phone = phone;
     warehouse.contact.email = email;
 
-    // console.log(warehouses);
     writeWarehouse(warehouses);
     res.status(200).json(warehouses);
   } else
@@ -73,10 +75,7 @@ router.put("/:warehouseId", (req, res) => {
 
 //delete warehouse
 router.delete("/:warehouseId", (req, res) => {
-  //read json
   const warehouses = readWarehouses();
-
-  //get id of each warehouse
   const warehouseId = req.params.warehouseId;
   console.log(warehouseId);
 
@@ -84,24 +83,19 @@ router.delete("/:warehouseId", (req, res) => {
     (warehouse) => warehouse.id !== warehouseId
   );
 
-  // Now save it to the file
   writeWarehouse(NewWarehouses);
   res.status(204).end();
 });
 
+//post warehouse
 router.post("/", (req, res) => {
   const warehouses = readWarehouses();
   if (Object.keys(req.body).length === 0) {
     res.status(404).json({ errorMessage: "request needs a body" });
     return;
   }
-  const {
-    name,
-    address,
-    city,
-    country,
-    contact: { contactName, position, phone, email },
-  } = req.body;
+  const { name, address, city, country, contactName, position, phone, email } =
+    req.body;
   console.log(req.body);
   const newWarehouse = {
     id: uuid(),
