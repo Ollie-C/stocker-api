@@ -1,7 +1,11 @@
 const router = require("express").Router();
 const fs = require("fs");
 const { v4: uuid } = require("uuid");
-const { readInventories, writeInventories } = require("../utils/helpers");
+const {
+  readInventories,
+  writeInventories,
+  readWarehouses,
+} = require("../utils/helpers");
 
 //get ALL inventories
 router.get("/", (req, res) => {
@@ -38,8 +42,8 @@ router.put("/:itemId", (req, res) => {
     return;
   }
   const itemId = req.params.itemId;
-  const { itemName, description, category, status, quantity, warehouseName } =
-    req.body;
+  console.log(itemId);
+  const { itemName, description, category, status, warehouseName } = req.body;
 
   const currentItem = inventories.find((item) => item.id === itemId);
 
@@ -48,7 +52,6 @@ router.put("/:itemId", (req, res) => {
     currentItem.description = description;
     currentItem.category = category;
     currentItem.status = status;
-    currentItem.quantity = quantity;
     currentItem.warehouseName = warehouseName;
 
     writeInventories(inventories);
@@ -62,24 +65,26 @@ router.post("/", (req, res) => {
     return;
   }
   const inventories = readInventories();
-  const {
-    itemName,
-    description,
-    category,
-    status,
-    quantity,
-    warehouseName,
-    warehouseID,
-  } = req.body;
+  const { itemName, description, category, quantity, warehouseName } = req.body;
+
+  // Find the warehouse ID by matching the name in the request body with a name in the warehouse data
+  const warehouses = readWarehouses();
+  const warehouse = warehouses.find(
+    (warehouse) => warehouse.name == warehouseName
+  );
+
+  //Instead of passing status from the request body, have it set automatically to one of two options dependant on quantity
+  const status = quantity > 0 ? "In Stock" : "Out of Stock";
+
   const newInventory = {
     id: uuid(),
-    warehouseID: warehouseID,
+    warehouseID: warehouse.id,
     warehouseName: warehouseName,
     itemName: itemName,
     description: description,
     category: category,
     status: status,
-    quantity: quantity,
+    quantity: parseInt(quantity),
   };
   inventories.push(newInventory);
 

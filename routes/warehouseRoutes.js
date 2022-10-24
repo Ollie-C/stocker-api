@@ -94,13 +94,8 @@ router.post("/", (req, res) => {
     res.status(404).json({ errorMessage: "request needs a body" });
     return;
   }
-  const {
-    name,
-    address,
-    city,
-    country,
-    contact: { contactName, position, phone, email },
-  } = req.body;
+  const { name, address, city, country, contactName, position, phone, email } =
+    req.body;
   console.log(req.body);
   const newWarehouse = {
     id: uuid(),
@@ -115,7 +110,8 @@ router.post("/", (req, res) => {
       email: email,
     },
   };
-  warehouses.push(newWarehouse);
+  // warehouses.push(newWarehouse);
+  warehouses.unshift(newWarehouse);
   writeWarehouse(warehouses);
   res.status(200).json(warehouses);
 
