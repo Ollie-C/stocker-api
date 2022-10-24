@@ -1,11 +1,9 @@
 const router = require("express").Router();
-const fs = require("fs");
 const { v4: uuid } = require("uuid");
 const {
   readWarehouses,
   readInventories,
   writeWarehouse,
-  writeInventories,
 } = require("../utils/helpers");
 
 //get ALL warehouses
@@ -45,13 +43,8 @@ router.put("/:warehouseId", (req, res) => {
     return;
   }
   const warehouseId = req.params.warehouseId;
-  const {
-    name,
-    address,
-    city,
-    country,
-    contact: { contactName, position, phone, email },
-  } = req.body;
+  const { name, address, city, country, contactName, position, phone, email } =
+    req.body;
 
   const warehouse = warehouses.find(
     (warehouse) => warehouse.id === warehouseId
